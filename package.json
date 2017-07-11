@@ -1,0 +1,30 @@
+{
+  "name": "tensorflow2",
+  "version": "1.0.0",
+  "description": "tensorflow bridging layer for Node.js",
+  "main": "lib/tensorflow.js",
+  "scripts": {
+    "test": "node test.js",
+    "build": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tensorflow/tensorflow.git"
+  },
+  "keywords": [
+    "tensorflow",
+    "nodejs",
+    "binding"
+  ],
+  "author": "Yorkie Liu <yorkiefixer@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tensorflow/tensorflow/issues"
+  },
+  "homepage": "https://github.com/tensorflow/tensorflow#readme",
+  "dependencies": {
+    "bindings": "^1.2.1",
+    "nan": "^2.6.2",
+    "protobufjs": "^6.8.0"
+  }
+}
