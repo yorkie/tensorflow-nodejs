@@ -15,13 +15,13 @@ been stabilized as well.
 const tf = require('tensorflow2');
 const graph = tf.createGraph();
 
-const beep = graph.const(200);
-const boop = graph.const(1000);
-const sum = graph.addN([boop, beep, boop]);
+const x = graph.placeholder();
+const y = graph.const(1000);
+const sum = graph.add(x, y);
 
 const session = tf.createSession(graph);
-const result = session.run(sum);
-console.log(result);
+const result = session.run(sum, tf.Tensor.from(1048));
+console.log(result); // 2048
 ```
 
 ## Installation
@@ -29,3 +29,7 @@ console.log(result);
 ```sh
 $ npm install tensorflow2 --save
 ```
+
+## License
+
+MIT
