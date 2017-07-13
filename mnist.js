@@ -13,6 +13,5 @@ const z = graph.add(x, y);
 
 const session = tf.createSession(graph);
 const feeds = tf.Tensor.from(1000);
-const res = session.run(z, [x, feeds]);
-
+const res = session.run(z, feeds);
 console.log('result is:', res);

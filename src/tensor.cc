@@ -41,7 +41,10 @@ NAN_PROPERTY_GETTER(Tensor::DataGetter) {
   TensorflowNode::Tensor* tensor = ObjectWrap::Unwrap<TensorflowNode::Tensor>(info.This());
   void* data = TF_TensorData(tensor->_tensor);
   size_t len = TF_TensorByteSize(tensor->_tensor);
-  Local<Object> buffer = Nan::NewBuffer((char*)data, len).ToLocalChecked();
+  // NewBuffer causes data to transfer internally, for example, when v8's GC collects this 
+  // ArrayBuffer object, `data` would also be freed.
+  // The `data` is actually freed by tensorflow internally, so here CopyBuffer is the better way.
+  Local<Object> buffer = Nan::CopyBuffer((char*)data, len).ToLocalChecked();
   info.GetReturnValue().Set(buffer);
 }
 

@@ -43,6 +43,9 @@ NAN_METHOD(Session::New) {
 
   session = new TensorflowNode::Session(graph->_graph, target, options);
   session->Wrap(info.This());
+
+  // this._graph = graph
+  Nan::Set(info.This(), Nan::New<String>("_graph").ToLocalChecked(), info[0]);
   info.GetReturnValue().Set(info.This());
 }
 
