@@ -2,7 +2,7 @@
   "name": "tensorflow2",
   "version": "1.0.0",
   "description": "tensorflow bridging layer for Node.js",
-  "main": "lib/tensorflow.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "node test.js",
     "build": "node-gyp rebuild"
