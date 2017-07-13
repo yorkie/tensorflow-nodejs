@@ -60,9 +60,17 @@ NAN_METHOD(Session::Run) {
   TensorflowNode::Session* session = ObjectWrap::Unwrap<TensorflowNode::Session>(info.This());
   TensorflowNode::Operation* placeholder = ObjectWrap::Unwrap<TensorflowNode::Operation>(info[0]->ToObject());
 
-  // session->SetInputs({{op2->_oper, tensor->_tensor}});
   session->SetOutputs({placeholder->_oper});
   // session->SetTargets({operation->_oper});
+
+  if (info[1]->IsObject()) {
+    Local<Object> feeds = info[1]->ToObject();
+    TensorflowNode::Operation* feedsOp = ObjectWrap::Unwrap<TensorflowNode::Operation>(
+      Nan::Get(feeds, 0).ToLocalChecked()->ToObject());
+    TensorflowNode::Tensor* feedsTensor = ObjectWrap::Unwrap<TensorflowNode::Tensor>(
+      Nan::Get(feeds, 1).ToLocalChecked()->ToObject());
+    session->SetInputs({{feedsOp->_oper, feedsTensor->_tensor}});
+  }
 
   const TF_Output* inputs_ptr = session->inputs_.empty() ? nullptr : &session->inputs_[0];
   TF_Tensor* const* input_values_ptr = session->input_values_.empty() ? nullptr : &session->input_values_[0];
