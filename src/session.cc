@@ -72,8 +72,15 @@ NAN_METHOD(Session::Run) {
     session->SetInputs({{feedsOp->_oper, feedsTensor->_tensor}});
   }
 
-  const TF_Output* inputs_ptr = session->inputs_.empty() ? nullptr : &session->inputs_[0];
-  TF_Tensor* const* input_values_ptr = session->input_values_.empty() ? nullptr : &session->input_values_[0];
+  const TF_Output* inputs_ptr;
+  TF_Tensor* const* input_values_ptr;
+  if (session->inputs_.empty()) {
+    inputs_ptr = nullptr;
+    input_values_ptr = nullptr;
+  } else {
+    inputs_ptr = &session->inputs_[0];
+    input_values_ptr = &session->input_values_[0];
+  }
 
   const TF_Output* outputs_ptr;
   TF_Tensor** output_values_ptr;
