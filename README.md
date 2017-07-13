@@ -20,7 +20,7 @@ const y = graph.const(1000);
 const sum = graph.add(x, y);
 
 const session = tf.createSession(graph);
-const result = session.run(sum, tf.Tensor.from(1048));
+const result = session.run(sum, 1048);
 console.log(result); // 2048
 ```
 

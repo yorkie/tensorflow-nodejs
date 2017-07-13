@@ -12,6 +12,5 @@ const z = graph.add(x, y);
 // const y = graph.nn.softmax(graph.matmul(x, W) + b);
 
 const session = tf.createSession(graph);
-const feeds = tf.Tensor.from(1000);
-const res = session.run(z, feeds);
+const res = session.run(z, 1000);
 console.log('result is:', res);
