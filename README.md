@@ -60,4 +60,4 @@ $ npm install tensorflow2 --save
 
 ## License
 
-[GPLv3](./LICENSE)
+[GPLv3](./LICENSE) licensed @ 2017
