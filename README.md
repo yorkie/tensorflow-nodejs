@@ -60,4 +60,4 @@ $ npm install tensorflow2 --save
 
 ## License
 
-MIT
+[GPLv3](./LICENSE)
