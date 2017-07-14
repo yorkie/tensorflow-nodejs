@@ -95,8 +95,12 @@ NAN_PROPERTY_GETTER(Operation::OutputsGetter) {
     }
     int64_t dims[numOfDims];
     TF_GraphGetTensorShape(graph->_graph, output, dims, numOfDims, status);
-    TF_DataType type = TF_OperationOutputType(output);
+    if (TF_GetCode(status) != TF_OK) {
+      ThrowStatusError();
+      return;
+    }
 
+    TF_DataType type = TF_OperationOutputType(output);
     Local<Object> item = Nan::New<Object>();
     Local<Array> shape = Nan::New<Array>(numOfDims);
     for (int j = 0; j < numOfDims; j++) {
