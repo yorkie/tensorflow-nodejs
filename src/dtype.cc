@@ -69,7 +69,7 @@ NAN_MODULE_INIT(DType::Init) {
     Nan::New<String>("resource").ToLocalChecked(), 
     Nan::New<Number>(TF_RESOURCE));
   // define util methods
-  Nan::Set(obj, Nan::New<String>("getSize").ToLocalChecked(), Nan::New<Function>(GetSize));
+  Nan::Set(obj, Nan::New<String>("sizeOf").ToLocalChecked(), Nan::New<Function>(GetSize));
   Nan::Set(target, Nan::New<String>("dtype").ToLocalChecked(), obj);
 }
 
