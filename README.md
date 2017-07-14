@@ -32,7 +32,6 @@ There are the following operations that we supported in this library.
 The state is managed by users for saving, restoring machine states.
 
 - [x] `variable` Holds state in the form of a tensor that persists across steps. Outputs a ref to the tensor state so it may be read or modified.
-
 - [x] `assign` Update 'ref' by assigning 'value' to it. This operation outputs "ref" after the assignment is done. This makes it easier to chain operations that need to use the reset value.
 
 ### Array
