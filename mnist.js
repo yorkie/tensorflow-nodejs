@@ -7,12 +7,9 @@ const graph = tf.createGraph();
 // const y = graph.const(30);
 // const z = graph.add(x, y);
 
-const x = graph.const([5, 103], 3, [2]);
-// const z = graph.zeros(x);
-const w = graph.variable(x);
-// const b = graph.variable(graph.zeros([10]));
-// const y = graph.nn.softmax(graph.matmul(x, W) + b);
+const x = graph.const([[5, 6], [103, 10]], 3, [2, 2]);
+const y = graph.matmul(x, x);
 
 const session = tf.createSession(graph);
-const res = session.run(w);
+const res = session.run(y);
 console.log('result is:', res);
