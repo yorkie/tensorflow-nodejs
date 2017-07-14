@@ -7,7 +7,7 @@ const graph = tf.createGraph();
 // const y = graph.const(30);
 // const z = graph.add(x, y);
 
-const x = graph.const([[5, 6], [10, 5]], 3, [2, 2]);
+const x = graph.const([[5, 6], [10, 7]], 3, [2, 2]);
 const w = graph.variable(x);
 const y = graph.matmul(w, w);
 
