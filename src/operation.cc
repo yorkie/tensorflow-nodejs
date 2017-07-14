@@ -28,6 +28,8 @@ NAN_MODULE_INIT(Operation::Init) {
     Nan::New<String>("type").ToLocalChecked(), TypeGetter);
   Nan::SetAccessor(tmpl->InstanceTemplate(), 
     Nan::New<String>("device").ToLocalChecked(), DeviceGetter);
+  // Nan::SetAccessor(tmpl->InstanceTemplate(),
+  //   Nan::New<String>("shape").ToLocalChecked(), ShapeGetter);
 
   Nan::SetPrototypeMethod(tmpl, "setAttrType", SetAttrType);
   Nan::SetPrototypeMethod(tmpl, "SetAttrBool", SetAttrBool);
