@@ -14,6 +14,8 @@ NAN_MODULE_INIT(Tensor::Init) {
     Nan::New<String>("type").ToLocalChecked(), TypeGetter);
   Nan::SetAccessor(tmpl->InstanceTemplate(), 
     Nan::New<String>("data").ToLocalChecked(), DataGetter);
+  Nan::SetAccessor(tmpl->InstanceTemplate(),
+    Nan::New<String>("shape").ToLocalChecked(), ShapeGetter);
 
   Nan::SetPrototypeMethod(tmpl, "getDimByIndex", GetDimByIndex);
   Nan::SetPrototypeMethod(tmpl, "maybeMove", MaybeMove);
@@ -31,12 +33,6 @@ NAN_PROPERTY_GETTER(Tensor::TypeGetter) {
   info.GetReturnValue().Set(Nan::New<Number>(type));
 }
 
-NAN_PROPERTY_GETTER(Tensor::NumOfDimGetter) {
-  TensorflowNode::Tensor* tensor = ObjectWrap::Unwrap<TensorflowNode::Tensor>(info.This());
-  int num = TF_NumDims(tensor->_tensor);
-  info.GetReturnValue().Set(Nan::New<Number>(num));
-}
-
 NAN_PROPERTY_GETTER(Tensor::DataGetter) {
   TensorflowNode::Tensor* tensor = ObjectWrap::Unwrap<TensorflowNode::Tensor>(info.This());
   void* data = TF_TensorData(tensor->_tensor);
@@ -46,6 +42,17 @@ NAN_PROPERTY_GETTER(Tensor::DataGetter) {
   // The `data` is actually freed by tensorflow internally, so here CopyBuffer is the better way.
   Local<Object> buffer = Nan::CopyBuffer((char*)data, len).ToLocalChecked();
   info.GetReturnValue().Set(buffer);
+}
+
+NAN_PROPERTY_GETTER(Tensor::ShapeGetter) {
+  TensorflowNode::Tensor* tensor = ObjectWrap::Unwrap<TensorflowNode::Tensor>(info.This());
+  int num = TF_NumDims(tensor->_tensor);
+
+  Local<Array> shape = Nan::New<Array>(num);
+  for (int i = 0; i < num; i++) {
+    Nan::Set(shape, i, Nan::New<Number>(TF_Dim(tensor->_tensor, i)));
+  }
+  info.GetReturnValue().Set(shape);
 }
 
 NAN_METHOD(Tensor::New) {

@@ -23,14 +23,14 @@ public:
   static NAN_PROPERTY_GETTER(TypeGetter);
 
   /**
-   * @property numOfDims
-   */
-  static NAN_PROPERTY_GETTER(NumOfDimGetter);
-
-  /**
    * @property data
    */
   static NAN_PROPERTY_GETTER(DataGetter);
+
+  /**
+   * @property shape
+   */
+  static NAN_PROPERTY_GETTER(ShapeGetter);
 
   /**
    * @constructor
