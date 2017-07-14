@@ -15,13 +15,12 @@ been stabilized as well.
 const tf = require('tensorflow2');
 const graph = tf.createGraph();
 
-const x = graph.placeholder();
-const y = graph.const(1000);
-const sum = graph.add(x, y);
+const x = graph.const([[1, 2], [3, 4]], tf.dtype.float32, [2, 2]);
+const w = graph.variable(x);
+const y = graph.nn.softmax(graph.matmul(w, w));
 
 const session = tf.createSession(graph);
-const result = session.run(sum, 1048);
-console.log(result); // 2048
+const res = session.run(y);
 ```
 
 ## Installation
