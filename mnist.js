@@ -3,13 +3,10 @@
 const tf = require('./');
 const graph = tf.createGraph();
 
-// const x = graph.placeholder();
-// const y = graph.const(30);
-// const z = graph.add(x, y);
 
-const x = graph.const([[5, 6], [10, 7]], 3, [2, 2]);
+const x = graph.const([[1, 2], [3, 4]], tf.dtype.float32, [2, 2]);
 const w = graph.variable(x);
-const y = graph.matmul(w, w);
+const y = graph.nn.softmax(graph.matmul(w, w));
 
 const session = tf.createSession(graph);
 const res = session.run(y);
