@@ -31,17 +31,17 @@ There are the following operations that we supported in this library.
 
 The state is managed by users for saving, restoring machine states.
 
-##### variable
+#### `variable`
 
 Holds state in the form of a tensor that persists across steps. Outputs a ref to the tensor state so it may be read or modified.
 
-##### assign
+#### `assign`
 
 Update 'ref' by assigning 'value' to it. This operation outputs "ref" after the assignment is done. This makes it easier to chain operations that need to use the reset value.
 
 ### Array
 
-##### placeholder
+#### `placeholder`
 
 A placeholder op for a value that will be fed into the computation.
 
@@ -49,11 +49,11 @@ N.B. This operation will fail with an error if it is executed. It is
 intended as a way to represent a value that will always be fed, and to
 provide attrs that enable the fed value to be checked at runtime.
 
-##### const
+#### `const`
 
 Returns a constant tensor.
 
-##### reverse
+#### `reverse`
 
 Reverses specific dimensions of a tensor.
 
@@ -72,11 +72,11 @@ rank(tensor) = size(dims)
 
 In this module, it implements the following alogrithms for represents neural networks.
 
-##### softmax
+#### `softmax`
 
 Computes softmax activations.
 
-##### l2loss 
+#### `l2loss`
 
 L2 Loss, Computes half the L2 norm of a tensor without the `sqrt`: 
 
@@ -84,7 +84,7 @@ L2 Loss, Computes half the L2 norm of a tensor without the `sqrt`:
 output = sum(t ** 2) / 2
 ```
 
-##### lrn
+#### `lrn`
 
 Local Response Normalization.
 
@@ -98,15 +98,15 @@ output = input / (bias + alpha * sqr_sum) ** beta
 
 For details, see [Krizhevsky et al., ImageNet classification with deep convolutional neural networks (NIPS 2012)](http://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks).
 
-##### relu
+#### `relu`
 
 Computes rectified linear: `max(features, 0)`.
 
-##### elu
+#### `elu`
 
 Computes exponential linear: `exp(features) - 1` if < 0, `features` otherwise. See [Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs)](http://arxiv.org/abs/1511.0728)
 
-##### inTopK
+#### `inTopK`
 
 Says whether the targets are in the top `K` predictions.
 
