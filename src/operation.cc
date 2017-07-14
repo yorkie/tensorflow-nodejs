@@ -28,8 +28,8 @@ NAN_MODULE_INIT(Operation::Init) {
     Nan::New<String>("type").ToLocalChecked(), TypeGetter);
   Nan::SetAccessor(tmpl->InstanceTemplate(), 
     Nan::New<String>("device").ToLocalChecked(), DeviceGetter);
-  // Nan::SetAccessor(tmpl->InstanceTemplate(),
-  //   Nan::New<String>("shape").ToLocalChecked(), ShapeGetter);
+  Nan::SetAccessor(tmpl->InstanceTemplate(),
+    Nan::New<String>("outputs").ToLocalChecked(), OutputsGetter);
 
   Nan::SetPrototypeMethod(tmpl, "setAttrType", SetAttrType);
   Nan::SetPrototypeMethod(tmpl, "SetAttrBool", SetAttrBool);
@@ -59,6 +59,9 @@ NAN_METHOD(Operation::New) {
   TensorflowNode::Graph* graph = ObjectWrap::Unwrap<TensorflowNode::Graph>(info[0]->ToObject());
   TensorflowNode::Operation* operation = new TensorflowNode::Operation(graph->_graph, type, name);
   operation->Wrap(info.This());
+
+  // this._graph = graph
+  Nan::Set(info.This(), Nan::New<String>("_graph").ToLocalChecked(), info[0]);
   info.GetReturnValue().Set(info.This());
 }
 
@@ -72,6 +75,38 @@ NAN_PROPERTY_GETTER(Operation::TypeGetter) {
 
 NAN_PROPERTY_GETTER(Operation::DeviceGetter) {
   OP_PROPERTY_GETTER(Device);
+}
+
+NAN_PROPERTY_GETTER(Operation::OutputsGetter) {
+  Local<Object> graphObj = Nan::Get(info.This(), Nan::New<String>("_graph").ToLocalChecked()).ToLocalChecked()->ToObject();
+  TensorflowNode::Graph* graph = ObjectWrap::Unwrap<TensorflowNode::Graph>(graphObj);
+  TensorflowNode::Operation* operation = ObjectWrap::Unwrap<TensorflowNode::Operation>(info.This());
+  if (operation->_oper == NULL)
+    return Nan::ThrowTypeError("operation is not created yet.");
+  int numOfOutputs = TF_OperationNumOutputs(operation->_oper);
+  Local<Array> outputsObj = Nan::New<Array>(numOfOutputs);
+
+  for (int i = 0; i < numOfOutputs; i++) {
+    TF_Output output = TF_Output{operation->_oper, i};
+    int numOfDims = TF_GraphGetTensorNumDims(graph->_graph, output, status);
+    if (TF_GetCode(status) != TF_OK) {
+      ThrowStatusError();
+      return;
+    }
+    int64_t dims[numOfDims];
+    TF_GraphGetTensorShape(graph->_graph, output, dims, numOfDims, status);
+    TF_DataType type = TF_OperationOutputType(output);
+
+    Local<Object> item = Nan::New<Object>();
+    Local<Array> shape = Nan::New<Array>(numOfDims);
+    for (int j = 0; j < numOfDims; j++) {
+      Nan::Set(shape, j, Nan::New<Number>(dims[i]));
+    }
+    Nan::Set(item, Nan::New<String>("shape").ToLocalChecked(), shape);
+    Nan::Set(item, Nan::New<String>("type").ToLocalChecked(), Nan::New<Number>((int)type));
+    Nan::Set(outputsObj, i, item);
+  }
+  info.GetReturnValue().Set(outputsObj);
 }
 
 NAN_METHOD(Operation::SetAttrType) {

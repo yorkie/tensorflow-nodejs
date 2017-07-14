@@ -41,6 +41,11 @@ public:
   static NAN_PROPERTY_GETTER(DeviceGetter);
 
   /**
+   * @property outputs
+   */
+  static NAN_PROPERTY_GETTER(OutputsGetter);
+
+  /**
    * @method setAttrType
    * @param {String} name - the attribute name
    * @param {Number} type - the type, tf.dtype
