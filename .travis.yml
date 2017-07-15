@@ -13,7 +13,7 @@ addons:
       - g++-4.8
 before_install:
   - npm install tar@3.1.5
-  - sudo scripts/download-libtensorflow.js
+  - sudo node scripts/download-libtensorflow.js
 install:
   - npm install
 cache:
