@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node test/*.js",
     "build": "node-gyp rebuild",
-    "prebuild": "node scripts/download-libtensorflow.js"
+    "preinstall": "node scripts/download-libtensorflow.js"
   },
   "repository": {
     "type": "git",
