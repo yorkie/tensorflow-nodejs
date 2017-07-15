@@ -1,10 +1,11 @@
-sudo: required
 language: node_js
 node_js:
   - "8.1.2"
 env:
   - CXX=g++-4.8
     NODE_ENV=test
+    LIBRARY_PATH=$PWD/tensorflow/lib:$LIBRARY_PATH
+    LD_LIBRARY_PATH=$PWD/tensorflow/lib:$LD_LIBRARY_PATH
 addons:
   apt:
     sources:
@@ -13,11 +14,11 @@ addons:
       - g++-4.8
 before_install:
   - npm install tar@3.1.5
-  - sudo $(which node) scripts/download-libtensorflow.js
+  - node scripts/download-libtensorflow.js
 install:
   - npm install
 script:
-  - sudo $(which node) test/test_op_array.js
+  - node test/test_op_array.js
 cache:
   directories:
     - "node_modules"

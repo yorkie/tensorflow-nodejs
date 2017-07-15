@@ -23,11 +23,11 @@ https.get(DOWNLOAD_URL, (res) => {
     entry.pipe(fs.createWriteStream(headerPath));
   }).on('end', () => {
     console.log('download done');
-    const libPath = path.join(__dirname, '../tensorflow/lib/libtensorflow.so');
-    fs.rename(libPath, '/usr/local/lib/libtensorflow.so', (err) => {
-      if (err)
-        throw err;
-      console.log('../tensorflow/lib/libtensorflow.so -> /usr/local/lib/libtensorflow.so');
-    });
+    // const libPath = path.join(__dirname, '../tensorflow/lib/libtensorflow.so');
+    // fs.rename(libPath, '/usr/local/lib/libtensorflow.so', (err) => {
+    //   if (err)
+    //     throw err;
+    //   console.log('../tensorflow/lib/libtensorflow.so -> /usr/local/lib/libtensorflow.so');
+    // });
   });
 });
