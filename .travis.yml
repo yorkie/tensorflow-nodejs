@@ -16,6 +16,8 @@ before_install:
   - sudo $(which node) scripts/download-libtensorflow.js
 install:
   - npm install
+script:
+  - sudo $(which npm) test
 cache:
   directories:
     - "node_modules"
