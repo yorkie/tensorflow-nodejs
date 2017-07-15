@@ -1,5 +1,16 @@
 # <img alt="TensorFlow" src="https://www.tensorflow.org/images/tf_logo_transp.png" width="170"/> Node.js Binding
 
+| NPM | Dependency | Build |
+|-----|------------|-------|
+|[![NPM version][npm-image]][npm-url]|[![Dependency Status][david-image]][david-url]|[![Build Status][travis-image]][travis-url]|
+
+[npm-image]: https://img.shields.io/npm/v/tensorflow2.svg?style=flat-square
+[npm-url]: https://npmjs.org/package/tensorflow2
+[travis-image]: https://img.shields.io/travis/yorkie/tensorflow-nodejs.svg?style=flat-square
+[travis-url]: https://travis-ci.org/yorkie/tensorflow-nodejs
+[david-image]: http://img.shields.io/david/yorkie/tensorflow-nodejs.svg?style=flat-square
+[david-url]: https://david-dm.org/yorkie/tensorflow-nodejs
+
 TensorFlow Node.js provides idiomatic [Node.js](https://nodejs.org) language
 bindings for [TensorFlow](http://tensorflow.org).
 
