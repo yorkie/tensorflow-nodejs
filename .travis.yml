@@ -1,3 +1,5 @@
+dist: trusty
+sudo: false
 language: node_js
 node_js:
   - "8.1.2"
@@ -13,13 +15,6 @@ addons:
     packages:
       - g++-4.8
 before_install:
-  # install glibc 2.17
-  - cd /tmp
-  - wget http://launchpadlibrarian.net/137699829/libc6-dev_2.17-0ubuntu5_amd64.deb
-  - mkdir -p libc6_2.17
-  - cd libc6_2.17
-  - ar p ../libc6-dev_2.17-0ubuntu5_amd64.deb data.tar.gz | tar zx
-  - cd ../../
   # install tensorflow lib
   - npm install tar@3.1.5
   - node scripts/download-libtensorflow.js
