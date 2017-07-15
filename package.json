@@ -4,7 +4,8 @@
   "description": "tensorflow bridging layer for Node.js",
   "main": "lib/index.js",
   "scripts": {
-    "test": "node test/*.js"
+    "test": "node test/*.js",
+    "sync": "scripts/download-libtensorflow.js"
   },
   "repository": {
     "type": "git",
