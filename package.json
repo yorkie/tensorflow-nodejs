@@ -4,9 +4,7 @@
   "description": "tensorflow bridging layer for Node.js",
   "main": "lib/index.js",
   "scripts": {
-    "test": "node test/*.js",
-    "build": "node-gyp rebuild",
-    "preinstall": "node scripts/download-libtensorflow.js"
+    "test": "node test/*.js"
   },
   "repository": {
     "type": "git",
@@ -24,12 +22,11 @@
   },
   "homepage": "https://github.com/yorkie/tensorflow-nodejs#readme",
   "dependencies": {
-    "bindings": "^1.2.1",
-    "nan": "^2.6.2",
-    "protobufjs": "^6.8.0"
+    "bindings": "1.2.1",
+    "nan": "2.6.2",
+    "protobufjs": "6.8.0"
   },
   "devDependencies": {
-    "tar": "^3.1.5",
-    "unzip": "^0.1.11"
+    "tar": "^3.1.5"
   }
 }

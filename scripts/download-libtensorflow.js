@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 
 const os = require('os');
@@ -16,5 +17,7 @@ https.get(DOWNLOAD_URL, (res) => {
       return;
     let headerPath = path.join(__dirname, '../tensorflow/', entry.path);
     entry.pipe(fs.createWriteStream(headerPath));
+  }).on('finish', () => {
+    console.log('download done');
   });
 });
