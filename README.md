@@ -1,4 +1,4 @@
-# <img alt="TensorFlow" src="https://www.tensorflow.org/images/tf_logo_transp.png" width="170"/> Node.js Binding
+# <img alt="TensorFlow" src="https://www.tensorflow.org/images/tf_logo_transp.png" width="170"/> for Node.js
 
 | NPM | Dependency | Build |
 |-----|------------|-------|
@@ -11,8 +11,8 @@
 [david-image]: http://img.shields.io/david/yorkie/tensorflow-nodejs.svg?style=flat-square
 [david-url]: https://david-dm.org/yorkie/tensorflow-nodejs
 
-TensorFlow Node.js provides idiomatic [Node.js](https://nodejs.org) language
-bindings for [TensorFlow](http://tensorflow.org).
+[TensorFlow](http://tensorflow.org) Node.js provides idiomatic JavaScript language
+bindings and a high layer API for Node.js users.
 
 **Notice:** This project is still under active development and not guaranteed to have a
 stable API. This is especially true because the underlying TensorFlow C API has not yet

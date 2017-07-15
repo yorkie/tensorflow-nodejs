@@ -1,7 +1,7 @@
 {
   "name": "tensorflow2",
-  "version": "1.0.2",
-  "description": "tensorflow bridging layer for Node.js",
+  "version": "1.0.4",
+  "description": "TensorFlow Node.js provides idiomatic JavaScript language bindings and a high layer API for Node.js users.",
   "main": "lib/index.js",
   "scripts": {
     "test": "node test/*.js",

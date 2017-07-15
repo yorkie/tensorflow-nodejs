@@ -22,7 +22,7 @@ install:
   - npm install
 script:
   - echo $LD_LIBRARY_PATH
-  - node test/test_op_array.js
+  - npm test
 cache:
   directories:
     - "node_modules"
