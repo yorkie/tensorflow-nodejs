@@ -17,7 +17,7 @@ before_install:
 install:
   - npm install
 script:
-  - sudo $(which npm) test
+  - sudo $(which node) test/test_op_array.js
 cache:
   directories:
     - "node_modules"
