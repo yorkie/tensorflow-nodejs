@@ -1,6 +1,6 @@
 {
   "name": "tensorflow2",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "tensorflow bridging layer for Node.js",
   "main": "lib/index.js",
   "scripts": {
