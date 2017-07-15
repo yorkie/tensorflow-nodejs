@@ -7,7 +7,7 @@ env:
   - CXX=g++-4.8
     NODE_ENV=test
     LIBRARY_PATH=$PWD/tensorflow/lib:$LIBRARY_PATH
-    LD_LIBRARY_PATH=$PWD/tensorflow/lib:/tmp/libc6_2.17/lib/x86_64-linux-gnu/:$LD_LIBRARY_PATH
+    LD_LIBRARY_PATH=$PWD/tensorflow/lib:$LD_LIBRARY_PATH
 addons:
   apt:
     sources:
