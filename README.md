@@ -40,6 +40,15 @@ The state is managed by users for saving, restoring machine states.
 - [x] `const` Returns a constant tensor.
 - [x] `reverse` Reverses specific dimensions of a tensor.
 
+### Flow
+
+- [x] `switch` Forwards `data` to the output port determined by `pred`.
+- [x] `merge` Forwards the value of an available tensor from `inputs` to `output`.
+- [x] `enter` Creates or finds a child frame, and makes `data` available to the child frame.
+- [x] `exit` Exits the current frame to its parent frame.
+- [x] `abort` Raise a exception to abort the process when called.
+- [x] `trigger` Does nothing and serves as a control trigger for scheduling.
+
 ### Neural networks
 
 In this module, it implements the following alogrithms for represents neural networks.
