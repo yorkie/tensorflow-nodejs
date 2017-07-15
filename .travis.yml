@@ -15,12 +15,11 @@ addons:
 before_install:
   # install glibc 2.17
   - cd /tmp
-  - wget http://launchpadlibrarian.net/137699828/libc6_2.17-0ubuntu5_amd64.deb
   - wget http://launchpadlibrarian.net/137699829/libc6-dev_2.17-0ubuntu5_amd64.deb
-  - mkdir libc6_2.17 && cd libc6_2.17
-  - ar p libc6_2.17-0ubuntu5_amd64.deb data.tar.gz | tar zx
-  - ar p libc6-dev_2.17-0ubuntu5_amd64.deb data.tar.gz | tar zx
-  - cd ../
+  - mkdir -p libc6_2.17
+  - cd libc6_2.17
+  - ar p ../libc6-dev_2.17-0ubuntu5_amd64.deb data.tar.gz | tar zx
+  - cd ../../
   # install tensorflow lib
   - npm install tar@3.1.5
   - node scripts/download-libtensorflow.js
