@@ -4,12 +4,13 @@
   "description": "tensorflow bridging layer for Node.js",
   "main": "lib/index.js",
   "scripts": {
-    "test": "node test.js",
-    "build": "node-gyp rebuild"
+    "test": "node test/*.js",
+    "build": "node-gyp rebuild",
+    "prebuild": "node scripts/download-libtensorflow.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/tensorflow/tensorflow.git"
+    "url": "git+ssh://git@github.com/yorkie/tensorflow-nodejs.git"
   },
   "keywords": [
     "tensorflow",
@@ -19,12 +20,16 @@
   "author": "Yorkie Liu <yorkiefixer@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tensorflow/tensorflow/issues"
+    "url": "https://github.com/yorkie/tensorflow-nodejs/issues"
   },
-  "homepage": "https://github.com/tensorflow/tensorflow#readme",
+  "homepage": "https://github.com/yorkie/tensorflow-nodejs#readme",
   "dependencies": {
     "bindings": "^1.2.1",
     "nan": "^2.6.2",
     "protobufjs": "^6.8.0"
+  },
+  "devDependencies": {
+    "tar": "^3.1.5",
+    "unzip": "^0.1.11"
   }
 }

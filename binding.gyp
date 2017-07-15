@@ -4,7 +4,7 @@
     "include_dirs": [
       "<!(node -e \"require('nan')\")",
       "./",
-      "../../../",
+      "./tensorflow/include",
     ],
     "sources": [ 
       "src/binding.cc",
@@ -24,6 +24,7 @@
       "MACOSX_DEPLOYMENT_TARGET": "10.12",
     },
     "libraries": [
+      "-L$(PWD)/tensorflow/lib",
       "-ltensorflow"
     ],
   }]

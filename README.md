@@ -39,6 +39,9 @@ The state is managed by users for saving, restoring machine states.
 - [x] `placeholder` A placeholder op for a value that will be fed into the computation.
 - [x] `const` Returns a constant tensor.
 - [x] `reverse` Reverses specific dimensions of a tensor.
+- [x] `shape` Returns the shape of a tensor.
+- [x] `rank` Returns the rank of a tensor.
+- [x] `size` Returns the size of a tensor.
 
 ### Flow
 
@@ -64,6 +67,12 @@ In this module, it implements the following alogrithms for represents neural net
 
 ```sh
 $ npm install tensorflow2 --save
+```
+
+## Tests
+
+```sh
+$ npm test
 ```
 
 ## License
