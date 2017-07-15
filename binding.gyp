@@ -17,8 +17,8 @@
       "src/session.cc",
       "src/tensor.cc"
     ],
-    "cflags!": [ "-fno-exceptions", "-std=c++11" ],
-    "cflags_cc!": [ "-fno-exceptions", "-std=c++11" ],
+    "cflags!": [ "-fno-exceptions" ],
+    "cflags_cc!": [ "-fno-exceptions" ],
     "xcode_settings": {
       "CLANG_CXX_LIBRARY": "libc++",
       "MACOSX_DEPLOYMENT_TARGET": "10.12",
