@@ -15,7 +15,7 @@
       "src/library.cc",
       "src/operation.cc",
       "src/session.cc",
-      "src/tensor.cc"
+      "src/tensor.cc",
     ],
     "cflags!": [ "-fno-exceptions" ],
     "cflags_cc!": [ "-fno-exceptions" ],

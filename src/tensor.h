@@ -62,6 +62,18 @@ public:
   static NAN_METHOD(Destory);
 
   /**
+   * @static
+   * @method _stringEncode
+   */
+  static NAN_METHOD(StringEncode);
+
+  /**
+   * @static
+   * @method _stringDecode
+   */
+  static NAN_METHOD(StringDecode);
+
+  /**
    * @method NewFromTensor
    */
   static Local<Object> NewFromTensor(TF_Tensor* tensor);

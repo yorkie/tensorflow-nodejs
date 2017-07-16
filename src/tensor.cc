@@ -21,10 +21,12 @@ NAN_MODULE_INIT(Tensor::Init) {
   Nan::SetPrototypeMethod(tmpl, "maybeMove", MaybeMove);
   Nan::SetPrototypeMethod(tmpl, "destroy", Destory);
 
+  Local<Object> func = Nan::GetFunction(tmpl).ToLocalChecked();
+  Nan::SetMethod(func, "_stringEncode", Tensor::StringEncode);
+  Nan::SetMethod(func, "_stringDecode", Tensor::StringDecode);
+
   constructor().Reset(Nan::GetFunction(tmpl).ToLocalChecked());
-  Nan::Set(target,
-    Nan::New("Tensor").ToLocalChecked(), 
-    Nan::GetFunction(tmpl).ToLocalChecked());
+  Nan::Set(target, Nan::New("Tensor").ToLocalChecked(), func);
 }
 
 NAN_PROPERTY_GETTER(Tensor::TypeGetter) {
@@ -135,6 +137,33 @@ NAN_METHOD(Tensor::Destory) {
   TensorflowNode::Tensor* tensor = ObjectWrap::Unwrap<TensorflowNode::Tensor>(info.This());
   delete tensor;
   info.GetReturnValue().Set(info.This());
+}
+
+NAN_METHOD(Tensor::StringEncode) {
+  V8_STRING_TO_CSTR(src, info[0]);
+  size_t srcLen = info[0]->ToString()->Length();
+  size_t dstLen = TF_StringEncodedSize(srcLen);
+  char dst[dstLen];
+
+  // FIXME(Yorkie): internally the result of this function is consistent with
+  // `status`, so just use status instead of the returned value.
+  TF_StringEncode(src, srcLen, dst, dstLen, status);
+  if (TF_GetCode(status) != TF_OK) {
+    return ThrowStatusError();
+  }
+
+  Local<Object> ret = Nan::CopyBuffer(dst, dstLen).ToLocalChecked();
+  info.GetReturnValue().Set(ret);
+}
+
+NAN_METHOD(Tensor::StringDecode) {
+  TensorflowNode::Tensor* tensor = ObjectWrap::Unwrap<TensorflowNode::Tensor>(info[0]->ToObject());
+  const char* pdst;
+  size_t plen;
+  const char* src = static_cast<char*>(TF_TensorData(tensor->_tensor));
+  size_t srcLen = TF_TensorByteSize(tensor->_tensor);
+  TF_StringDecode(src, srcLen, &pdst, &plen, status);
+  info.GetReturnValue().Set(Nan::New<String>(pdst, plen).ToLocalChecked());
 }
 
 Local<Object> 
