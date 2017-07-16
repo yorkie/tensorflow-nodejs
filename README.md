@@ -63,6 +63,16 @@ The state is managed by users for saving, restoring machine states.
 - [x] `abort` Raise a exception to abort the process when called.
 - [x] `trigger` Does nothing and serves as a control trigger for scheduling.
 
+### Image
+
+- [x] `decodeJpeg` Decode a JPEG-encoded image to a uint8 tensor.
+- [x] `encodeJpeg` JPEG-encode an image.
+- [x] `resizeArea` Resize `images` to `size` using area interpolation.
+- [x] `resizeBicubic` Resize `images` to `size` using bicubic interpolation.
+- [x] `resizeBilinear` Resize `images` to `size` using bilinear interpolation.
+- [x] `resizeNearestNeighbor` Resize `images` to `size` using nearest neighbor interpolation.
+- [x] `randomCorp` Randomly crop `image`.
+
 ### Neural networks
 
 In this module, it implements the following alogrithms for represents neural networks.
