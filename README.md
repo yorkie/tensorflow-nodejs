@@ -78,6 +78,13 @@ The state is managed by users for saving, restoring machine states.
 - [x] `resizeNearestNeighbor` Resize `images` to `size` using nearest neighbor interpolation.
 - [x] `randomCorp` Randomly crop `image`.
 
+### Audio
+
+- [x] `decodeWav` Decode a 16-bit PCM WAV file to a float tensor.
+- [x] `encodeWav` Encode audio data using the WAV file format.
+- [x] `spectrogram` Produces a visualization of audio data over time.
+- [x] `mfcc` Transforms a spectrogram into a form that's useful for speech recognition.
+
 ### Neural networks
 
 In this module, it implements the following alogrithms for represents neural networks.
