@@ -51,6 +51,13 @@ The state is managed by users for saving, restoring machine states.
 - [x] `variable` Holds state in the form of a tensor that persists across steps. Outputs a ref to the tensor state so it may be read or modified.
 - [x] `assign` Update 'ref' by assigning 'value' to it. This operation outputs "ref" after the assignment is done. This makes it easier to chain operations that need to use the reset value.
 
+### Random
+
+- [x] `randomUniform` Outputs random values from a uniform distribution.
+- [x] `randomUniformInt` Outputs random integers from a uniform distribution.
+- [x] `randomGamma` Outputs random values from the Gamma distribution(s) described by alpha.
+- [x] `randomPoisson` Outputs random values from the Poisson distribution(s) described by rate.
+
 ### Array
 
 - [x] `placeholder` A placeholder op for a value that will be fed into the computation.
