@@ -54,6 +54,11 @@ The state is managed by users for saving, restoring machine states.
 - [x] `rank` Returns the rank of a tensor.
 - [x] `size` Returns the size of a tensor.
 
+### Base64
+
+- [x] `encode` Encode strings into web-safe base64 format.
+- [x] `decode` Decode web-safe base64-encoded strings.
+
 ### Flow
 
 - [x] `switch` Forwards `data` to the output port determined by `pred`.
