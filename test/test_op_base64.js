@@ -2,8 +2,8 @@
 
 const assert = require('assert');
 const tf = require('../');
-const graph = tf.createGraph();
-const session = tf.createSession(graph);
+const graph = tf.graph();
+const session = tf.session();
 
 function assertEncodeBase64(actual) {
   const text = graph.const(actual);
