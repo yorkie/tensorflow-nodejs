@@ -18,6 +18,12 @@ bindings and a high layer API for Node.js users.
 stable API. This is especially true because the underlying TensorFlow C API has not yet
 been stabilized as well.
 
+## Installation
+
+```sh
+$ npm install tensorflow2 --save
+```
+
 ## Usage
 
 ```js
@@ -95,12 +101,6 @@ In this module, it implements the following alogrithms for represents neural net
 - [x] `relu` Computes rectified linear: `max(features, 0)`.
 - [x] `elu` Computes exponential linear: `exp(features) - 1` if < 0, `features` otherwise. See [Fast and Accurate Deep Network Learning by Exponential Linear Units (ELUs)](http://arxiv.org/abs/1511.0728).
 - [x] `inTopK` Says whether the targets are in the top `K` predictions.
-
-## Installation
-
-```sh
-$ npm install tensorflow2 --save
-```
 
 ## Tests
 
