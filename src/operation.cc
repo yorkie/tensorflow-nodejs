@@ -208,11 +208,10 @@ NAN_METHOD(Operation::SetAttrTensor) {
   V8_STRING_TO_CSTR(name, info[0]);
   TensorflowNode::Tensor* tensor = ObjectWrap::Unwrap<TensorflowNode::Tensor>(info[1]->ToObject());
   TF_SetAttrTensor(operation->_description, name, tensor->_tensor, status);
-  if (TF_GetCode(status) == TF_OK) {
-    info.GetReturnValue().Set(info.This());
-  } else {
-    ThrowStatusError();
+  if (TF_GetCode(status) != TF_OK) {
+    return ThrowStatusError();
   }
+  info.GetReturnValue().Set(info.This());
 }
 
 NAN_METHOD(Operation::AddInput) {

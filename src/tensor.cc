@@ -157,11 +157,14 @@ NAN_METHOD(Tensor::StringEncode) {
 }
 
 NAN_METHOD(Tensor::StringDecode) {
-  TensorflowNode::Tensor* tensor = ObjectWrap::Unwrap<TensorflowNode::Tensor>(info[0]->ToObject());
+  if (!info[0]->IsArrayBuffer()) {
+    return Nan::ThrowTypeError("The first argument should be ArrayBuffer");
+  }
   const char* pdst;
   size_t plen;
-  const char* src = static_cast<char*>(TF_TensorData(tensor->_tensor));
-  size_t srcLen = TF_TensorByteSize(tensor->_tensor);
+  Local<ArrayBuffer> buffer = Local<ArrayBuffer>::Cast(info[0]);
+  const char* src = static_cast<char*>(buffer->GetContents().Data());
+  size_t srcLen = buffer->ByteLength();
   TF_StringDecode(src, srcLen, &pdst, &plen, status);
   info.GetReturnValue().Set(Nan::New<String>(pdst, plen).ToLocalChecked());
 }
