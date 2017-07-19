@@ -4,6 +4,7 @@
 #include <node.h>
 #include <nan.h>
 #include "tensorflow/c/c_api.h"
+#include "src/graph.h"
 
 using namespace v8;
 
@@ -121,12 +122,20 @@ public:
    */
   static NAN_METHOD(Finish);
 
+  /**
+   * @method NewFromOperation
+   */
+  static Local<Object> NewFromOperation(Local<Object> graph, TF_Operation* oper);
+
   TF_Operation* _oper;
   TF_OperationDescription* _description;
 
 private:
+  explicit Operation();
   explicit Operation(TF_Graph* graph, const char* type, const char* name);
   ~Operation();
+
+  static inline Nan::Persistent<v8::Function>& constructor();
 };
 
 }

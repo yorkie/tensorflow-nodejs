@@ -43,21 +43,25 @@ NAN_MODULE_INIT(Operation::Init) {
   Nan::SetPrototypeMethod(tmpl, "addControlInput", AddControlInput);
   Nan::SetPrototypeMethod(tmpl, "finish", Finish);
 
-  Nan::Set(target,
-    Nan::New("Operation").ToLocalChecked(), 
-    Nan::GetFunction(tmpl).ToLocalChecked());
+  Local<Function> func = Nan::GetFunction(tmpl).ToLocalChecked();
+  constructor().Reset(func);
+  Nan::Set(target, Nan::New("Operation").ToLocalChecked(), func);
 }
 
 NAN_METHOD(Operation::New) {
-  if (info.Length() != 3) {
+  if (info.Length() == 0) {
     return Nan::ThrowTypeError("should call with graph, type and name.");
   }
-
-  // String::Utf8Value type_value(info[1]);
-  V8_STRING_TO_CSTR(type, info[1]);
-  V8_STRING_TO_CSTR(name, info[2]);
   TensorflowNode::Graph* graph = ObjectWrap::Unwrap<TensorflowNode::Graph>(info[0]->ToObject());
-  TensorflowNode::Operation* operation = new TensorflowNode::Operation(graph->_graph, type, name);
+  TensorflowNode::Operation* operation;
+
+  if (info.Length() >= 3) {
+    V8_STRING_TO_CSTR(type, info[1]);
+    V8_STRING_TO_CSTR(name, info[2]);
+    operation = new TensorflowNode::Operation(graph->_graph, type, name);
+  } else {
+    operation = new TensorflowNode::Operation();
+  }
   operation->Wrap(info.This());
 
   // this._graph = graph
@@ -284,6 +288,20 @@ NAN_METHOD(Operation::Finish) {
   }
 }
 
+Local<Object>
+Operation::NewFromOperation(Local<Object> graph, TF_Operation* oper) {
+  Nan::EscapableHandleScope scope;
+  Local<Function> tmpl = Nan::New(constructor());
+  Local<Value> argv[1] = { graph };
+  Local<Object> target = Nan::NewInstance(tmpl, 1, argv).ToLocalChecked();
+  TensorflowNode::Operation *operation = ObjectWrap::Unwrap<TensorflowNode::Operation>(target);
+  operation->_oper = oper;
+  return scope.Escape(target);
+}
+
+Operation::Operation() {
+  // Placeholder
+}
 
 Operation::Operation(TF_Graph* graph, const char* type, const char* name) {
   _description = TF_NewOperation(graph, type, name);
@@ -292,6 +310,12 @@ Operation::Operation(TF_Graph* graph, const char* type, const char* name) {
 
 Operation::~Operation() {
   // TODO
+}
+
+inline Nan::Persistent<v8::Function>& 
+Operation::constructor() {
+  static Nan::Persistent<v8::Function> my_constructor;
+  return my_constructor;
 }
 
 }

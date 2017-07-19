@@ -169,7 +169,7 @@ NAN_METHOD(Tensor::StringDecode) {
   info.GetReturnValue().Set(Nan::New<String>(pdst, plen).ToLocalChecked());
 }
 
-Local<Object> 
+Local<Object>
 Tensor::NewFromTensor(TF_Tensor* data) {
   Nan::EscapableHandleScope scope;
   Local<Function> tmpl = Nan::New(constructor());

@@ -76,7 +76,7 @@ public:
   /**
    * @method NewFromTensor
    */
-  static Local<Object> NewFromTensor(TF_Tensor* tensor);
+  static Local<Object> NewFromTensor(TF_Tensor* data);
 
   /**
    * interner TF_Tensor reference

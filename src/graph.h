@@ -23,6 +23,11 @@ public:
   static NAN_METHOD(New);
 
   /**
+   * @method import
+   */
+  static NAN_METHOD(Import);
+
+  /**
    * @method destroy
    */
   static NAN_METHOD(Destory);
@@ -41,6 +46,13 @@ public:
    * @method getNumOfDims
    */
   static NAN_METHOD(GetNumOfDims);
+
+  /**
+   * @method getGraphDef
+   */
+  static NAN_METHOD(GetGraphDef);
+
+
   TF_Graph* _graph;
 
 private:

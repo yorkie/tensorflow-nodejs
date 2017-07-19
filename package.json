@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "node test/*.js",
+    "pretest": "python test/data/gen_graph_def.py",
     "sync": "scripts/download-libtensorflow.js"
   },
   "repository": {
