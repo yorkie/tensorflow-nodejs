@@ -26,7 +26,7 @@ $ npm install tensorflow2 --save
 
 ## Usage
 
-#### Run a predefined graph
+### Run a predefined graph
 
 The ability to run a predefined graph is the most basic function for any [TensorFlow] client library.
 
@@ -60,7 +60,7 @@ const op = graph.operations.get('my_variable/Assign');
 const res = session.run(op);
 ```
 
-#### Graph construction
+### Graph construction
 
 > At least one function per defined TensorFlow op that adds an operation to the graph. Ideally these functions would be automatically generated so they stay in sync as the op definitions are modified.
 
