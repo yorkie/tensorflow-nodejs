@@ -11,8 +11,8 @@
 [david-image]: http://img.shields.io/david/yorkie/tensorflow-nodejs.svg?style=flat-square
 [david-url]: https://david-dm.org/yorkie/tensorflow-nodejs
 
-[TensorFlow](http://tensorflow.org) Node.js provides idiomatic JavaScript language
-bindings and a high layer API for Node.js users.
+[TensorFlow] Node.js provides idiomatic JavaScript language bindings and a high layer 
+API for Node.js users.
 
 **Notice:** This project is still under active development and not guaranteed to have a
 stable API. This is especially true because the underlying TensorFlow C API has not yet
@@ -25,6 +25,44 @@ $ npm install tensorflow2 --save
 ```
 
 ## Usage
+
+#### Run a predefined graph
+
+The ability to run a predefined graph is the most basic function for any [TensorFlow] client library.
+
+> Given a `GraphDef` (or `MetaGraphDef`) protocol message, be able to create a session, run queries, and get tensor results. This is sufficient for a mobile app or server that wants to run inference on a pre-trained model.
+
+Output the `GraphDef` binary format from your Python script:
+
+```python
+import tensorflow as tf
+import os
+
+def main():
+  v = tf.Variable(1000, name='my_variable')
+  sess = tf.Session()
+  tf.train.write_graph(sess.graph_def, tmpdir, 'graph.pb', as_text=False)
+```
+
+And import the `graph.pb` to your JavaScript runtime:
+
+```js
+const tf = require('tensorflow2');
+const graph = tf.graph();
+const session = tf.session();
+
+graph.import('/path/to/graph.pb');
+
+// load the op by name
+const op = graph.operations.get('my_variable/Assign');
+
+// the following outputs the 1000
+const res = session.run(op);
+```
+
+#### Graph construction
+
+> At least one function per defined TensorFlow op that adds an operation to the graph. Ideally these functions would be automatically generated so they stay in sync as the op definitions are modified.
 
 ```js
 'use strict';
@@ -118,3 +156,5 @@ $ npm test
 ## License
 
 [GPLv3](./LICENSE) licensed @ 2017
+
+[TensorFlow]: http://tensorflow.org
