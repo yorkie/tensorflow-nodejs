@@ -1,6 +1,6 @@
 {
   "name": "tensorflow2",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "TensorFlow Node.js provides idiomatic JavaScript language bindings and a high layer API for Node.js users.",
   "main": "lib/index.js",
   "scripts": {
