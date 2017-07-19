@@ -155,6 +155,6 @@ $ npm test
 
 ## License
 
-[GPLv3](./LICENSE) licensed @ 2017
+[MIT](./LICENSE) licensed @ 2017
 
 [TensorFlow]: http://tensorflow.org
