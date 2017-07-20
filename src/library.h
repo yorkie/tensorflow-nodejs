@@ -25,12 +25,14 @@ public:
   /**
    * @method getOperationList
    */
-  static NAN_METHOD(GetOperationsList);
+  static NAN_METHOD(GetOperations);
+  
+  TF_Library* _handle;
 
-  /**
-   * @method destroy
-   */
-  static NAN_METHOD(Destory);
+private:
+
+  Library(const char* filename);
+  ~Library();
 };
 
 }
