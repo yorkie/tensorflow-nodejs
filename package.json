@@ -1,11 +1,12 @@
 {
   "name": "tensorflow2",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "TensorFlow Node.js provides idiomatic JavaScript language bindings and a high layer API for Node.js users.",
   "main": "lib/index.js",
   "scripts": {
     "test": "node test/*.js",
-    "sync": "scripts/download-libtensorflow.js"
+    "sync": "scripts/download-libtensorflow.js",
+    "prepublish": "scripts/download-libtensorflow.js"
   },
   "repository": {
     "type": "git",
