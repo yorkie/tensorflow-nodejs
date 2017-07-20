@@ -22,7 +22,7 @@ NAN_METHOD(Library::New) {
   info.GetReturnValue().Set(info.This());
 }
 
-NAN_METHOD(GetOperations) {
+NAN_METHOD(Library::GetOperations) {
   TensorflowNode::Library* library = Nan::ObjectWrap::Unwrap<TensorflowNode::Library>(info.This());
   TF_Buffer list = TF_GetOpList(library->_handle);
   info.GetReturnValue().Set(
