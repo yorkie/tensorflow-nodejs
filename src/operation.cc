@@ -97,21 +97,28 @@ NAN_PROPERTY_GETTER(Operation::OutputsGetter) {
       ThrowStatusError();
       return;
     }
-    int64_t dims[numOfDims];
-    TF_GraphGetTensorShape(graph->_graph, output, dims, numOfDims, status);
-    if (TF_GetCode(status) != TF_OK) {
-      ThrowStatusError();
-      return;
-    }
 
     TF_DataType type = TF_OperationOutputType(output);
     Local<Object> item = Nan::New<Object>();
-    Local<Array> shape = Nan::New<Array>(numOfDims);
-    for (int j = 0; j < numOfDims; j++) {
-      Nan::Set(shape, j, Nan::New<Number>(dims[i]));
+    Local<Array> shape;
+
+    // The `numOfDims` possibly to be -1
+    if (numOfDims > 0) {
+      int64_t dims[numOfDims];
+      TF_GraphGetTensorShape(graph->_graph, output, dims, numOfDims, status);
+      if (TF_GetCode(status) != TF_OK) {
+        ThrowStatusError();
+        return;
+      }
+      shape = Nan::New<Array>(numOfDims);
+    } else {
+      // if the `numOfDims` is -1, shape should be [], as a scalar value.
+      shape = Nan::New<Array>(0);
     }
     Nan::Set(item, Nan::New<String>("shape").ToLocalChecked(), shape);
-    Nan::Set(item, Nan::New<String>("type").ToLocalChecked(), Nan::New<Number>((int)type));
+    Nan::Set(item, 
+      Nan::New<String>("type").ToLocalChecked(), 
+      Nan::New<Number>((int)type));
     Nan::Set(outputsObj, i, item);
   }
   info.GetReturnValue().Set(outputsObj);
