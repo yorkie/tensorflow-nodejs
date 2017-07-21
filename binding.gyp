@@ -6,7 +6,7 @@
       "./",
       "./tensorflow/include",
     ],
-    "sources": [ 
+    "sources": [
       "src/binding.cc",
       "src/buffer.cc",
       "src/dtype.cc",
@@ -24,8 +24,9 @@
       "MACOSX_DEPLOYMENT_TARGET": "10.12",
     },
     "libraries": [
+      "-Wl,-rpath,$(PWD)/tensorflow/lib",
       "-L$(PWD)/tensorflow/lib",
-      "-ltensorflow"
+      "-ltensorflow",
     ],
   }]
 }
