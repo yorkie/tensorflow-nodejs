@@ -44,14 +44,16 @@ def main():
   tf.train.write_graph(sess.graph_def, tmpdir, 'graph.pb', as_text=False)
 ```
 
-And import the `graph.pb` to your JavaScript runtime:
+And load the `graph.pb` to your JavaScript runtime:
 
 ```js
+'use strict';
+
 const tf = require('tensorflow2');
 const graph = tf.graph();
 const session = tf.session();
 
-graph.import('/path/to/graph.pb');
+graph.load('/path/to/graph.pb');
 
 // load the op by name
 const op = graph.operations.get('my_variable/Assign');
@@ -70,7 +72,7 @@ const res = session.run(op);
 const tf = require('tensorflow2');
 const graph = tf.graph();
 
-const x = graph.const([[1, 2], [3, 4]], tf.dtype.float32, [2, 2]);
+const x = graph.constant([[1, 2], [3, 4]], tf.dtype.float32, [2, 2]);
 const w = graph.variable(x);
 const y = graph.nn.softmax(graph.matmul(w, w));
 
