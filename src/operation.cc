@@ -111,6 +111,9 @@ NAN_PROPERTY_GETTER(Operation::OutputsGetter) {
         return;
       }
       shape = Nan::New<Array>(numOfDims);
+      for (int i = 0; i < numOfDims; i++) {
+        Nan::Set(shape, i, Nan::New<Number>(dims[i]));
+      }
     } else {
       // if the `numOfDims` is -1, shape should be [], as a scalar value.
       shape = Nan::New<Array>(0);
