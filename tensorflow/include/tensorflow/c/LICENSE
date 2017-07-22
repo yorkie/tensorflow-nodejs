@@ -1,4 +1,5 @@
-4 - Fast LZ compression algorithm
+
+   LZ4 - Fast LZ compression algorithm
    Copyright (C) 2011, Yann Collet.
    BSD License
 
