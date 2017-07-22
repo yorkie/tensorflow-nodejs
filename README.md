@@ -118,7 +118,7 @@ The state is managed by users for saving, restoring machine states.
 - [x] `merge` Forwards the value of an available tensor from `inputs` to `output`.
 - [x] `enter` Creates or finds a child frame, and makes `data` available to the child frame.
 - [x] `exit` Exits the current frame to its parent frame.
-- [x] `abort` Raise a exception to abort the process when called.
+- [x] `abort` Raise an exception to abort the process when called.
 - [x] `trigger` Does nothing and serves as a control trigger for scheduling.
 
 ### Image
@@ -140,7 +140,7 @@ The state is managed by users for saving, restoring machine states.
 
 ### Neural networks
 
-In this module, it implements the following alogrithms for represents neural networks.
+In this module, it implements the following algorithms for representing neural networks.
 
 - [x] `softmax` Computes softmax activations.
 - [x] `l2loss` L2 Loss, Computes half the L2 norm of a tensor without the `sqrt`.
