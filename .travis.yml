@@ -14,10 +14,6 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-4.8
-before_install:
-  # install tensorflow lib
-  - npm install tar@3.1.5
-  - node scripts/download-libtensorflow.js
 install:
   - npm install
 script:
