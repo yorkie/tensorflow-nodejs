@@ -66,13 +66,17 @@ NAN_METHOD(Session::Run) {
   session->SetOutputs({placeholder->_oper});
   // session->SetTargets({operation->_oper});
 
-  if (info[1]->IsObject()) {
-    Local<Object> feeds = info[1]->ToObject();
-    TensorflowNode::Operation* feedsOp = ObjectWrap::Unwrap<TensorflowNode::Operation>(
-      Nan::Get(feeds, 0).ToLocalChecked()->ToObject());
-    TensorflowNode::Tensor* feedsTensor = ObjectWrap::Unwrap<TensorflowNode::Tensor>(
-      Nan::Get(feeds, 1).ToLocalChecked()->ToObject());
-    session->SetInputs({{feedsOp->_oper, feedsTensor->_tensor}});
+  if (info[1]->IsArray()) {
+    Local<Array> feeds = Local<Array>::Cast(info[1]);
+    size_t lengthOfFeeds = feeds->Length();
+    std::vector<std::pair<TF_Operation*, TF_Tensor*>> inputs;
+    for (size_t i = 0; i < lengthOfFeeds; i++) {
+      Local<Object> feed = Nan::Get(feeds, i).ToLocalChecked()->ToObject();
+      TensorflowNode::Operation* op = Nan::ObjectWrap::Unwrap<TensorflowNode::Operation>(Nan::Get(feed, 0).ToLocalChecked()->ToObject());
+      TensorflowNode::Tensor* tensor = Nan::ObjectWrap::Unwrap<TensorflowNode::Tensor>(Nan::Get(feed, 1).ToLocalChecked()->ToObject());
+      inputs.push_back({op->_oper, tensor->_tensor});
+    }
+    session->SetInputs(inputs);
   }
 
   const TF_Output* inputs_ptr;
