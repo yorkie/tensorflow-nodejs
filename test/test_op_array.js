@@ -17,3 +17,11 @@ assert.equal(session.run(test_rank), 2);
 
 const test_size = graph.size(test_const);
 assert.equal(session.run(test_size), 4);
+
+const test_onehot_arr = graph.constant([1, 2, 3], tf.dtype.int32, [3]);
+const test_onehot = graph.onehot(test_onehot_arr, 5);
+assert.deepEqual(session.run(test_onehot), [
+  [0, 1, 0, 0, 0],
+  [0, 0, 1, 0, 0],
+  [0, 0, 0, 1, 0],
+]);

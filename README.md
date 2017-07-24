@@ -106,6 +106,7 @@ The state is managed by users for saving, restoring machine states.
 - [x] `shape` Returns the shape of a tensor.
 - [x] `rank` Returns the rank of a tensor.
 - [x] `size` Returns the size of a tensor.
+- [x] `onehot` Returns a one-hot tensor.
 
 ### Base64
 
