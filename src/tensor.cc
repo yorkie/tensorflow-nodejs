@@ -192,9 +192,10 @@ Tensor::Tensor(TF_DataType type, const int64_t* dims, int numOfDims, size_t len)
 }
 
 Tensor::~Tensor() {
-  if (_tensor != nullptr) {
-    TF_DeleteTensor(_tensor);
-  }
+  // FIXME(Yorkie): don't free tensor by tensor itself, already done by session
+  // if (_tensor != nullptr) {
+  //   TF_DeleteTensor(_tensor);
+  // }
 }
 
 void 

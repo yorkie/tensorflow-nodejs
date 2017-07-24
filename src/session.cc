@@ -160,7 +160,8 @@ Session::~Session() {
 void 
 Session::DeleteInputValues() {
   for (size_t i = 0; i < input_values_.size(); ++i) {
-    TF_DeleteTensor(input_values_[i]);
+    if (input_values_[i] != NULL)
+      TF_DeleteTensor(input_values_[i]);
   }
   input_values_.clear();
 }
@@ -168,8 +169,9 @@ Session::DeleteInputValues() {
 void 
 Session::DeleteOutputValues() {
   for (size_t i = 0; i < output_values_.size(); ++i) {
-    if (output_values_[i] != NULL) 
+    if (output_values_[i] != NULL) {
       TF_DeleteTensor(output_values_[i]);
+    }
   }
   output_values_.clear();
 }
