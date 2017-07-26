@@ -4,11 +4,13 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
-const tar = require('tar');
+const tar = require('tar-fs');
+const gunzip = require('gunzip-maybe');
 
+const version = '1.2.1';
 const TF_TYPE = process.env.TF_TYPE || 'cpu';
 const DOWNLOAD_URL = 'https://storage.googleapis.com/tensorflow/libtensorflow/' +
-  `libtensorflow-${TF_TYPE}-${os.platform()}-x86_64-1.2.1.tar.gz`;
+  `libtensorflow-${TF_TYPE}-${os.platform()}-x86_64-${version}.tar.gz`;
 
 https.get(DOWNLOAD_URL, (res) => {
   if (res.statusCode !== 200) {
@@ -16,13 +18,5 @@ https.get(DOWNLOAD_URL, (res) => {
   } else {
     console.log(DOWNLOAD_URL + ' is finished downloaded.');
   }
-  res.pipe(tar.t()).on('entry', (entry) => {
-    if (entry.type !== 'File')
-      return;
-    let headerPath = path.join(__dirname, './tensorflow', entry.path);
-    console.log(headerPath);
-    entry.pipe(fs.createWriteStream(headerPath));
-  }).on('end', () => {
-    console.log('download done');
-  });
+  res.pipe(gunzip()).pipe(tar.extract('./tensorflow'));
 });
