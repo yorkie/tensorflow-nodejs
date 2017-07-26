@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node test/*.js",
     "preinstall": "echo \"placeholder\"",
-    "postinstall": "cp -r node_modules/tensorflow-downloader/tensorflow ./ && node-gyp rebuild"
+    "postinstall": "node scripts/download.js && node-gyp rebuild"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,6 @@
     "bn.js": "^4.11.7",
     "nan": "2.6.2",
     "protobufjs": "6.8.0",
-    "tensorflow-downloader": "1.1.0"
+    "tar": "3.1.7"
   }
 }

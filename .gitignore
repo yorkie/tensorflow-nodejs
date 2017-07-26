@@ -2,4 +2,5 @@ build/
 node_modules/
 tensorflow/
 
+package-lock.json
 *.DS_Store
