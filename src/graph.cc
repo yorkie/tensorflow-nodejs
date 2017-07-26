@@ -1,6 +1,7 @@
 #include "src/graph.h"
 #include "src/operation.h"
 #include "src/internal.h"
+#include "tensorflow/c/c_api.h"
 
 using namespace v8;
 
@@ -17,6 +18,7 @@ NAN_MODULE_INIT(Graph::Init) {
   Nan::SetPrototypeMethod(tmpl, "getShape", GetShape);
   Nan::SetPrototypeMethod(tmpl, "getNumOfDims", GetNumOfDims);
   Nan::SetPrototypeMethod(tmpl, "getGraphDef", GetGraphDef);
+  Nan::SetPrototypeMethod(tmpl, "getAllOpList", GetAllOpList);
 
   Nan::Set(target, 
     Nan::New("Graph").ToLocalChecked(), 
@@ -83,6 +85,12 @@ NAN_METHOD(Graph::GetGraphDef) {
   }
   info.GetReturnValue().Set(
     Nan::NewBuffer((char*)graphdef->data, graphdef->length).ToLocalChecked());
+}
+
+NAN_METHOD(Graph::GetAllOpList) {
+  TF_Buffer* list = TF_GetAllOpList();
+  info.GetReturnValue().Set(
+  Nan::CopyBuffer((char *)list->data, list->length).ToLocalChecked());
 }
 
 Graph::Graph() {

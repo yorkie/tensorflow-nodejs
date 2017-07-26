@@ -52,6 +52,10 @@ public:
    */
   static NAN_METHOD(GetGraphDef);
 
+  /**
+   * @method GetAllOpList
+   */
+  static NAN_METHOD(GetAllOpList);
 
   TF_Graph* _graph;
 
