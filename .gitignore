@@ -1,6 +1,7 @@
 build/
 node_modules/
 tensorflow/
+protobuf/
 
 package-lock.json
 *.DS_Store
