@@ -15,20 +15,24 @@ const DOWNLOAD_URL = 'https://storage.googleapis.com/tensorflow/libtensorflow/' 
 const PROTOBUF_URL = 'https://storage.googleapis.com/tensorflow/libtensorflow/' +
   `libtensorflow_proto-${version}.zip`;
 
-https.get(DOWNLOAD_URL, (res) => {
-  if (res.statusCode !== 200) {
-    throw new Error(DOWNLOAD_URL + ' ' + res.statusMessage);
-  } else {
-    console.log(DOWNLOAD_URL + ' is finished downloaded.');
-  }
-  res.pipe(gunzip()).pipe(tar.extract('./tensorflow'));
-});
+if (!fs.existsSync('./tensorflow')) {
+  https.get(DOWNLOAD_URL, (res) => {
+    if (res.statusCode !== 200) {
+      throw new Error(DOWNLOAD_URL + ' ' + res.statusMessage);
+    } else {
+      console.log(DOWNLOAD_URL + ' is finished downloaded.');
+    }
+    res.pipe(gunzip()).pipe(tar.extract('./tensorflow'));
+  });
+} else {
+  console.log('Skiped, tensorflow library and header are exists');
+}
 
 https.get(PROTOBUF_URL, (res) => {
   if (res.statusCode !== 200) {
     throw new Error(PROTOBUF_URL + ' ' + res.statusMessage);
   } else {
-    console.log(PROTOBUF_URL + ' is finished downloaded.');
+    console.log('Done,', PROTOBUF_URL + ' is finished downloaded.');
   }
   res.pipe(unzip.Extract({
     path: './protobuf'
