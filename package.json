@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "scripts": {
     "test": "node test/*.js",
+    "clean": "rm -rf ./tensorflow ./protobuf && node-gyp clean",
     "preinstall": "echo \"placeholder\"",
     "postinstall": "node scripts/download.js && node-gyp rebuild"
   },
