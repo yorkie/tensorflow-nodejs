@@ -27,6 +27,12 @@ public:
   static NAN_METHOD(New);
 
   /**
+   * @static
+   * @method load
+   */
+  static NAN_METHOD(Load);
+
+  /**
    * @method close
    */
   static NAN_METHOD(Close);
@@ -47,6 +53,8 @@ public:
 
 private:
   explicit Session(TF_Graph* graph, const char* target, ArrayBuffer::Contents options);
+  explicit Session(TF_Graph* graph, const char* target, ArrayBuffer::Contents options, 
+    const char* exportDir, const char* const* tags, int tagsLen);
   ~Session();
   void DeleteInputValues();
   void DeleteOutputValues();

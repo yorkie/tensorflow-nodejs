@@ -17,9 +17,9 @@ NAN_MODULE_INIT(Session::Init) {
   Nan::SetPrototypeMethod(tmpl, "destory", Destory);
   Nan::SetPrototypeMethod(tmpl, "_run", Run);
 
-  Nan::Set(target, 
-    Nan::New("Session").ToLocalChecked(),
-    Nan::GetFunction(tmpl).ToLocalChecked());
+  Local<Function> func = Nan::GetFunction(tmpl).ToLocalChecked();
+  Nan::SetMethod(func, "load", Session::Load);
+  Nan::Set(target, Nan::New("Session").ToLocalChecked(), func);
 }
 
 NAN_METHOD(Session::New) {
@@ -42,6 +42,23 @@ NAN_METHOD(Session::New) {
   }
 
   session = new TensorflowNode::Session(graph->_graph, target, options);
+  session->Wrap(info.This());
+
+  // this._graph = graph
+  Nan::Set(info.This(), Nan::New<String>("_graph").ToLocalChecked(), info[0]);
+  info.GetReturnValue().Set(info.This());
+}
+
+NAN_METHOD(Session::Load) {
+  ArrayBuffer::Contents options;
+  TensorflowNode::Session* session;
+  TensorflowNode::Graph* graph = ObjectWrap::Unwrap<TensorflowNode::Graph>(info[0]->ToObject());
+
+  const char* target = *String::Utf8Value(info[1]);
+  const char* exportdir = *String::Utf8Value(info[2]);
+  const char* tags[] = {};
+
+  session = new TensorflowNode::Session(graph->_graph, target, options, exportdir, tags, 0);
   session->Wrap(info.This());
 
   // this._graph = graph
@@ -140,6 +157,35 @@ Session::Session(TF_Graph* graph, const char* target, ArrayBuffer::Contents opti
   }
 
   _session = TF_NewSession(graph, opts, status);
+  TF_DeleteSessionOptions(opts);
+  if (TF_GetCode(status) != TF_OK) {
+    Nan::ThrowError(TF_Message(status));
+    return;
+  }
+}
+
+Session::Session(TF_Graph* graph, const char* target, ArrayBuffer::Contents options, 
+  const char* exportDir, const char* const* tags, int tagsLen) {
+  TF_SessionOptions* opts = TF_NewSessionOptions();
+  if (target) {
+    // TODO
+    // TF_SetTarget(opts, target);
+  }
+  if (options.ByteLength() != 0) {
+    TF_SetConfig(opts, options.Data(), options.ByteLength(), status);
+    if (TF_GetCode(status) != TF_OK) {
+      Nan::ThrowError(TF_Message(status));
+      return;
+    }
+  }
+
+  _session = TF_LoadSessionFromSavedModel(opts, 
+                                          nullptr, 
+                                          exportDir, 
+                                          tags, tagsLen, 
+                                          graph, 
+                                          nullptr, 
+                                          status);
   TF_DeleteSessionOptions(opts);
   if (TF_GetCode(status) != TF_OK) {
     Nan::ThrowError(TF_Message(status));
