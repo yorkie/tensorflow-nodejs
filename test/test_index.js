@@ -2,4 +2,6 @@
 
 const assert = require('assert');
 const tf = require('../');
-assert(tf.getAllOpList().length >= 0);
+const oplist = tf.Graph.getAllOpList();
+
+assert(oplist.length > 0);

@@ -18,11 +18,11 @@ NAN_MODULE_INIT(Graph::Init) {
   Nan::SetPrototypeMethod(tmpl, "getShape", GetShape);
   Nan::SetPrototypeMethod(tmpl, "getNumOfDims", GetNumOfDims);
   Nan::SetPrototypeMethod(tmpl, "getGraphDef", GetGraphDef);
-  Nan::SetPrototypeMethod(tmpl, "getAllOpList", GetAllOpList);
 
-  Nan::Set(target, 
-    Nan::New("Graph").ToLocalChecked(), 
-    Nan::GetFunction(tmpl).ToLocalChecked());
+  Local<Function> func = Nan::GetFunction(tmpl).ToLocalChecked();
+  // static method
+  Nan::SetMethod(func, "_getAllOpList", Graph::GetAllOpList);
+  Nan::Set(target, Nan::New("Graph").ToLocalChecked(), func);
 }
 
 NAN_METHOD(Graph::New) {

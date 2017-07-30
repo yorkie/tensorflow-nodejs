@@ -8,7 +8,6 @@
 #include "src/session.h"
 #include "src/tensor.h"
 
-
 void InitModule(Handle<Object> target) {
   // set modules
   TensorflowNode::DType::Init(target);
@@ -22,7 +21,7 @@ void InitModule(Handle<Object> target) {
   // set version string
   Nan::Set(target,
     Nan::New<String>("version").ToLocalChecked(), 
-    Nan::New<String>(TF_Version()).ToLocalChecked());   
+    Nan::New<String>(TF_Version()).ToLocalChecked());
 }
 
 NODE_MODULE(tensorflow, InitModule);
