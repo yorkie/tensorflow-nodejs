@@ -2,6 +2,7 @@ build/
 node_modules/
 tensorflow/
 protobuf/
-
+coverage/
 package-lock.json
 *.DS_Store
+.editorconfig

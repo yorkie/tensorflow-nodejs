@@ -5,8 +5,11 @@ const tf = require('../');
 const graph = tf.graph();
 const session = tf.session();
 
-graph.load('test/data/graph_def.pbtxt');
+graph.load('test/fixtures/graph_def.pbtxt');
 
 const op = graph.operations.get('my_variable/Assign');
 const res = session.run(op);
-assert.equal(res, 1000);
+
+test('graph', () => {
+  assert.equal(res, 1000);      
+});
