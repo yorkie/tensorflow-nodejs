@@ -33,12 +33,19 @@ NAN_METHOD(Graph::New) {
 
 NAN_METHOD(Graph::Import) {
   TensorflowNode::Graph* graph = ObjectWrap::Unwrap<TensorflowNode::Graph>(info.This());
-  TF_ImportGraphDefOptions* options = TF_NewImportGraphDefOptions();
+  TF_ImportGraphDefOptions* opts = TF_NewImportGraphDefOptions();
 
   ArrayBuffer::Contents data = Local<ArrayBuffer>::Cast(info[0])->GetContents();
   TF_Buffer* proto = TF_NewBufferFromString(data.Data(), data.ByteLength());
 
-  TF_GraphImportGraphDef(graph->_graph, proto, options, status);
+  Local<Object> v8options = info[1]->ToObject();
+  Local<String> prefixKey = Nan::New("prefix").ToLocalChecked();
+  if (Nan::Has(v8options, prefixKey).FromJust()) {
+    const char* prefix = *String::Utf8Value(Nan::Get(v8options, prefixKey).ToLocalChecked());
+    TF_ImportGraphDefOptionsSetPrefix(opts, prefix);
+  }
+
+  TF_GraphImportGraphDef(graph->_graph, proto, opts, status);
   if (TF_GetCode(status) != TF_OK) {
     ThrowStatusError();
     return;
