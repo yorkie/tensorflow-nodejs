@@ -90,7 +90,7 @@ NAN_METHOD(Graph::GetGraphDef) {
 NAN_METHOD(Graph::GetAllOpList) {
   TF_Buffer* list = TF_GetAllOpList();
   info.GetReturnValue().Set(
-  Nan::CopyBuffer((char *)list->data, list->length).ToLocalChecked());
+    Nan::CopyBuffer((char *)list->data, list->length).ToLocalChecked());
 }
 
 Graph::Graph() {
