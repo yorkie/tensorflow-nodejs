@@ -18,7 +18,9 @@ NAN_MODULE_INIT(Session::Init) {
   Nan::SetPrototypeMethod(tmpl, "_run", Run);
 
   Local<Function> func = Nan::GetFunction(tmpl).ToLocalChecked();
-  Nan::SetMethod(func, "load", Session::Load);
+  // static methods
+
+  constructor().Reset(Nan::GetFunction(tmpl).ToLocalChecked());
   Nan::Set(target, Nan::New("Session").ToLocalChecked(), func);
 }
 
@@ -33,15 +35,34 @@ NAN_METHOD(Session::New) {
   TensorflowNode::Graph* graph = ObjectWrap::Unwrap<TensorflowNode::Graph>(info[0]->ToObject());
 
   // check for target parameter
-  V8_STRING_TO_CSTR(target, info[1]);
+  const char* target = *String::Utf8Value(info[1]);
 
   // check for options parameter
-  if (info.Length() == 3 && info[2]->IsArrayBuffer()) {
+  if (info[2]->IsArrayBuffer()) {
     Local<ArrayBuffer> optionsBuffer = Local<ArrayBuffer>::Cast(info[2]);
     options = optionsBuffer->GetContents();
   }
 
-  session = new TensorflowNode::Session(graph->_graph, target, options);
+  if (info[3]->IsString()) {
+    if (!info[4]->IsArray()) {
+      return Nan::ThrowTypeError("tags should be an array.");
+    }
+    Local<Array> tagsArr = Local<Array>::Cast(info[4]);
+    uint32_t numOfTags = tagsArr->Length();
+
+    String::Utf8Value dirstr(info[3]->ToString());
+    const char* dir = *dirstr;
+    const char* tags[numOfTags];
+
+    for (uint32_t i = 0; i < numOfTags; i++) {
+      tags[i] = *String::Utf8Value(Nan::Get(tagsArr, i).ToLocalChecked());
+    }
+
+    printf("foobar: %s\n", dir);
+    session = new TensorflowNode::Session(graph->_graph, target, options, dir, tags, numOfTags);
+  } else {
+    session = new TensorflowNode::Session(graph->_graph, target, options);
+  }
   session->Wrap(info.This());
 
   // this._graph = graph
@@ -49,21 +70,10 @@ NAN_METHOD(Session::New) {
   info.GetReturnValue().Set(info.This());
 }
 
-NAN_METHOD(Session::Load) {
-  ArrayBuffer::Contents options;
-  TensorflowNode::Session* session;
-  TensorflowNode::Graph* graph = ObjectWrap::Unwrap<TensorflowNode::Graph>(info[0]->ToObject());
-
-  const char* target = *String::Utf8Value(info[1]);
-  const char* exportdir = *String::Utf8Value(info[2]);
-  const char* tags[] = {};
-
-  session = new TensorflowNode::Session(graph->_graph, target, options, exportdir, tags, 0);
-  session->Wrap(info.This());
-
-  // this._graph = graph
-  Nan::Set(info.This(), Nan::New<String>("_graph").ToLocalChecked(), info[0]);
-  info.GetReturnValue().Set(info.This());
+inline Nan::Persistent<v8::Function>& 
+Session::constructor() {
+  static Nan::Persistent<v8::Function> my_constructor;
+  return my_constructor;
 }
 
 NAN_METHOD(Session::Close) {

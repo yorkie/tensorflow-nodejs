@@ -15,6 +15,7 @@ namespace TensorflowNode {
  */
 class Session : public Nan::ObjectWrap {
 public:
+  static inline Nan::Persistent<v8::Function>& constructor();
   static NAN_MODULE_INIT(Init);
 
   /**
