@@ -4,6 +4,7 @@ const assert = require('assert');
 const tf = require('../../');
 const graph = tf.graph();
 const session = tf.session();
+
 test('op.array', () => {
   const test_const = graph.constant([[1, 2], [3, 4]], tf.dtype.float32, [2, 2]);
   assert.deepEqual(test_const.outputs[0].shape, [2, 2]);
