@@ -58,6 +58,7 @@ public:
   static NAN_METHOD(GetAllOpList);
 
   TF_Graph* _graph;
+  void updateOps(Local<Object> self);
 
 private:
   explicit Graph();

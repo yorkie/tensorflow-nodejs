@@ -57,9 +57,8 @@ NAN_METHOD(Session::New) {
     for (uint32_t i = 0; i < numOfTags; i++) {
       tags[i] = *String::Utf8Value(Nan::Get(tagsArr, i).ToLocalChecked());
     }
-
-    printf("foobar: %s\n", dir);
     session = new TensorflowNode::Session(graph->_graph, target, options, dir, tags, numOfTags);
+    graph->updateOps(info[0].As<Object>());
   } else {
     session = new TensorflowNode::Session(graph->_graph, target, options);
   }

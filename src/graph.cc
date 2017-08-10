@@ -38,11 +38,13 @@ NAN_METHOD(Graph::Import) {
   ArrayBuffer::Contents data = Local<ArrayBuffer>::Cast(info[0])->GetContents();
   TF_Buffer* proto = TF_NewBufferFromString(data.Data(), data.ByteLength());
 
-  Local<Object> v8options = info[1]->ToObject();
-  Local<String> prefixKey = Nan::New("prefix").ToLocalChecked();
-  if (Nan::Has(v8options, prefixKey).FromJust()) {
-    const char* prefix = *String::Utf8Value(Nan::Get(v8options, prefixKey).ToLocalChecked());
-    TF_ImportGraphDefOptionsSetPrefix(opts, prefix);
+  if (info.Length() >= 2) {
+    Local<Object> v8options = info[1]->ToObject();
+    Local<String> prefixKey = Nan::New("prefix").ToLocalChecked();
+    if (Nan::Has(v8options, prefixKey).FromJust()) {
+      const char* prefix = *String::Utf8Value(Nan::Get(v8options, prefixKey).ToLocalChecked());
+      TF_ImportGraphDefOptionsSetPrefix(opts, prefix);
+    }
   }
 
   TF_GraphImportGraphDef(graph->_graph, proto, opts, status);
@@ -51,14 +53,7 @@ NAN_METHOD(Graph::Import) {
     return;
   }
 
-  Local<Function> iterator = Local<Function>::Cast(info[1]);
-  size_t pos = 0;
-  TF_Operation* oper;
-  while ((oper = TF_GraphNextOperation(graph->_graph, &pos)) != nullptr) {
-    Local<Value> argv[1] = { TensorflowNode::Operation::NewFromOperation(info.This(), oper) };
-    Nan::Call(iterator, info.This(), 1, argv);
-  }
-
+  graph->updateOps(info.This());
   info.GetReturnValue().Set(info.This());
 }
 
@@ -107,6 +102,19 @@ Graph::Graph() {
 Graph::~Graph() {
   if (_graph != NULL) {
     TF_DeleteGraph(_graph);
+  }
+}
+
+void Graph::updateOps(Local<Object> self) {
+  Nan::EscapableHandleScope scope;
+  Local<String> name = Nan::New("shouldUpdateOperation").ToLocalChecked();
+  Local<Function> iterator = Local<Function>::Cast(Nan::Get(self, name).ToLocalChecked());
+
+  size_t pos = 0;
+  TF_Operation* oper;
+  while ((oper = TF_GraphNextOperation(_graph, &pos)) != nullptr) {
+    Local<Value> argv[1] = { TensorflowNode::Operation::NewFromOperation(self, oper) };
+    Nan::Call(iterator, self, 1, argv);
   }
 }
 
