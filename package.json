@@ -30,7 +30,7 @@
     "bn.js": "^4.11.7",
     "gunzip-maybe": "^1.4.1",
     "nan": "2.6.2",
-    "protobufjs": "6.8.0",
+    "protobufjs": "6.8.6",
     "tar-fs": "^1.15.3",
     "unzip": "^0.1.11"
   },
