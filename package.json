@@ -1,23 +1,20 @@
 {
   "name": "tensorflow2",
-  "version": "1.0.22",
+  "version": "2.0.0",
   "description": "TensorFlow Node.js provides idiomatic JavaScript language bindings and a high layer API for Node.js users.",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
     "test-cov": "npm run test -- --coverage && npm install codecov && ./node_modules/.bin/codecov",
     "clean": "rm -rf ./tensorflow ./protobuf && node-gyp clean",
-    "preinstall": "echo \"placeholder\"",
-    "postinstall": "node scripts/download.js && node-gyp rebuild"
+    "postinstall": "echo \"install tensorflow via boa\""
   },
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/yorkie/tensorflow-nodejs.git"
   },
   "keywords": [
-    "tensorflow",
-    "nodejs",
-    "binding"
+    "tensorflow"
   ],
   "author": "Yorkie Liu <yorkiefixer@gmail.com>",
   "license": "MIT",
@@ -26,13 +23,7 @@
   },
   "homepage": "https://github.com/yorkie/tensorflow-nodejs#readme",
   "dependencies": {
-    "bindings": "1.2.1",
-    "bn.js": "^4.11.7",
-    "gunzip-maybe": "^1.4.1",
-    "nan": "2.6.2",
-    "protobufjs": "6.8.6",
-    "tar-fs": "^1.15.3",
-    "unzip": "^0.1.11"
+    "@pipcook/boa": "^1.2.0"
   },
   "devDependencies": {
     "jest": "20.0.4"
