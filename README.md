@@ -30,6 +30,15 @@ $ npm install tensorflow2 --save
 
 ```js
 const tf = require('tensorflow2');
+
+// load mnist dataset
+const dataset = tf.keras.dataset.mnist();
+// {
+//   train: { x: [Getter], y: [Getter] },
+//   test: { x: [Getter], y: [Getter] }
+// }
+
+// create model
 const model = tf.keras.models.Sequential([
   tf.keras.layers.Flatten({
     input_shape: [28, 28]
