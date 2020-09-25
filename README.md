@@ -65,7 +65,7 @@ model.fit(dataset.train.x, dataset.train.y, { epochs: 5 });
 model.save('your-model.h5');
 ```
 
-See [examples/mnist.js](./examples/mnist.js) for complete example.
+See [example/mnist.js](./example/mnist.js) for complete example.
 
 ## Tests
 
