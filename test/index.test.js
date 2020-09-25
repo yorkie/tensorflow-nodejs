@@ -8,7 +8,12 @@ test('index', () => {
   console.log(tf.constant([100, 200, 300]));
 });
 
-test('keras', () => {
+test('leras.datasets', () => {
+  const dataset = tf.keras.datasets.mnist();
+  console.log(dataset);
+});
+
+test('keras.layers and model', () => {
   const model = tf.keras.models.Sequential([
     tf.keras.layers.Flatten({
       input_shape: [28, 28]
