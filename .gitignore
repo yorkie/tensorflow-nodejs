@@ -6,3 +6,4 @@ coverage/
 package-lock.json
 *.DS_Store
 .editorconfig
+*.h5

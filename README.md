@@ -13,8 +13,7 @@
 [coveralls-image]: https://img.shields.io/codecov/c/github/yorkie/tensorflow-nodejs.svg?style=flat-square
 [coveralls-url]: https://codecov.io/github/yorkie/tensorflow-nodejs?branch=master
 
-[TensorFlow] Node.js provides idiomatic JavaScript language bindings and a high layer 
-API for Node.js users.
+This library wraps [Tensorflow][] Python for Node.js developers, it's powered by [@pipcook/boa](https://github.com/alibaba/pipcook/blob/master/docs/manual/intro-to-boa.md).
 
 **Notice:** This project is still under active development and not guaranteed to have a
 stable API. This is especially true because the underlying TensorFlow C API has not yet
@@ -31,14 +30,14 @@ $ npm install tensorflow2 --save
 ```js
 const tf = require('tensorflow2');
 
-// load mnist dataset
+// load mnist dataset.
 const dataset = tf.keras.dataset.mnist();
 // {
 //   train: { x: [Getter], y: [Getter] },
 //   test: { x: [Getter], y: [Getter] }
 // }
 
-// create model
+// create model.
 const model = tf.keras.models.Sequential([
   tf.keras.layers.Flatten({
     input_shape: [28, 28]
@@ -50,26 +49,23 @@ const model = tf.keras.models.Sequential([
   tf.keras.layers.Dense(10)
 ]);
 model.summary();
+
+// compile the model.
+const loss_fn = tf.keras.losses.SparseCategoricalCrossentropy({ from_logits: true });
+model.compile({
+  optimizer: 'adam',
+  loss: loss_fn,
+  metrics: [ 'accuracy' ],
+});
+
+// train the model.
+model.fit(dataset.train.x, dataset.train.y, { epochs: 5 });
+
+// save the model
+model.save('your-model.h5');
 ```
 
-The above shows:
-
-```sh
-Model: "sequential"
-_________________________________________________________________
-Layer (type)                 Output Shape              Param #
-=================================================================
-flatten (Flatten)            (None, 784)               0
-_________________________________________________________________
-dense (Dense)                (None, 128)               100480
-_________________________________________________________________
-dropout (Dropout)            (None, 128)               0
-_________________________________________________________________
-dense_1 (Dense)              (None, 10)                1290
-=================================================================
-Total params: 101,770
-Trainable params: 101,770
-```
+See [examples/mnist.js](./examples/mnist.js) for complete example.
 
 ## Tests
 
@@ -79,6 +75,6 @@ $ npm test
 
 ## License
 
-[MIT](./LICENSE) licensed @ 2017
+[MIT](./LICENSE) licensed @ 2020
 
 [TensorFlow]: http://tensorflow.org

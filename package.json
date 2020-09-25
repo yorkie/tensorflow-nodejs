@@ -7,7 +7,7 @@
     "test": "jest",
     "test-cov": "npm run test -- --coverage && npm install codecov && ./node_modules/.bin/codecov",
     "clean": "rm -rf ./tensorflow ./protobuf && node-gyp clean",
-    "postinstall": "echo \"install tensorflow via boa\""
+    "postinstall": "npx bip install tensorflow"
   },
   "repository": {
     "type": "git",
