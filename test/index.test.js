@@ -25,4 +25,5 @@ test('keras.layers and model', () => {
     tf.keras.layers.Dense(10)
   ]);
   console.log(model.summary());
+  console.log(model.toString('json'));
 });
